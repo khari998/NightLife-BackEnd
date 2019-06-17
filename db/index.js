@@ -1,10 +1,10 @@
 // database index
 const Sequelize = require('sequelize');
 
-const dbName = process.env.DATABASE_NAME || "Burboun";
+const dbName = process.env.DATABASE_NAME || "Bourbon";
 const uName = process.env.USERNAME || "OmarScrumMaster";
 const pw = process.env.PASSWORD || "";
-const host = process.env.HOST || ""; // find correct value for host
+const host = process.env.HOST || "localhost"; // find correct value for host
 const port = process.env.PORT || 8080;
 
 const sequelize = new Sequelize(dbName, uName, pw, {
@@ -23,7 +23,6 @@ const User = sequelize.define('user', { // model schema for user -- lowercase fo
 const Location = sequelize.define('location', {
   name: Sequelize.STRING,
   rating_avg: Sequelize.INTEGER,
-
 })
 
 const Guardians = sequelize.define('guardians', {
