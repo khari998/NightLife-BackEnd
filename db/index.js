@@ -26,6 +26,14 @@ const Location = sequelize.define('location', {
 
 })
 
+const Guardians = sequelize.define('guardians', {
+  name: Sequelize.STRING,
+  number: Sequelize.STRING,
+  email: Sequelize.STRING,
+})
+Guardians.belongsTo(User);
+
+
 const Ratings = sequelize.define('ratings', {
   rating: Sequelize.INTEGER,
 }); // create join table as new table so it can be referenced as variable
@@ -38,6 +46,7 @@ Users_Locations.belongsTo(Location);
 
 const Comment = sequelize.define('comment', {
   text: Sequelize.STRING,
+  type: Sequelize.STRING,
 }); // create join table as new table so it can be referenced as variable
 Comment.belongsTo(User); // define join table relationship to User
 Comment.belongsTo(Location);
