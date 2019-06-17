@@ -2,16 +2,22 @@
 const Sequelize = require('sequelize');
 
 const dbName = process.env.DATABASE_NAME || "Bourbon";
-const uName = process.env.USERNAME || "OmarScrumMaster";
+const uName = process.env.USERNAME || "root";
 const pw = process.env.PASSWORD || "";
 const host = process.env.HOST || "localhost";
-const port = process.env.PORT || 8080;
 
 const sequelize = new Sequelize(dbName, uName, pw, {
   host,
-  port,
   dialect: 'mysql',
 });
+
+sequelize.authenticate()
+  .then(() => console.log('Connected to the database'))
+  .catch(err => console.log('Could not connect to the database', err));
+
+sequelize.sync({
+  force: false, // Drops info in database for testing
+})
 
 const User = sequelize.define('user', { 
   name: Sequelize.STRING,
