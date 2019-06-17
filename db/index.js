@@ -4,7 +4,7 @@ const Sequelize = require('sequelize');
 const dbName = process.env.DATABASE_NAME || "Bourbon";
 const uName = process.env.USERNAME || "OmarScrumMaster";
 const pw = process.env.PASSWORD || "";
-const host = process.env.HOST || "localhost"; // find correct value for host
+const host = process.env.HOST || "localhost";
 const port = process.env.PORT || 8080;
 
 const sequelize = new Sequelize(dbName, uName, pw, {
@@ -13,7 +13,7 @@ const sequelize = new Sequelize(dbName, uName, pw, {
   dialect: 'mysql',
 });
 
-const User = sequelize.define('user', { // model schema for user -- lowercase for psql.
+const User = sequelize.define('user', { 
   name: Sequelize.STRING,
   phone: Sequelize.STRING,
   profilePic: Sequelize.STRING,
