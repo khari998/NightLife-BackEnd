@@ -6,11 +6,13 @@
   "dependencies": {
     "express": "^4.17.1",
     "mysql2": "^1.6.5",
+    "node": "^12.4.0",
     "sequelize": "^5.8.10"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/index.js"
   },
   "repository": {
     "type": "git",
