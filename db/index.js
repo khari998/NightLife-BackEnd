@@ -1,22 +1,17 @@
 // database index
-require('dotenv').config();
+
 
 const Sequelize = require('sequelize');
 const {  
-  DATABASE_NAME,
-  USERNAME,
-  PASSWORD,
-  HOST,
-  PORT,
+  DB_NAME,
+  DB_USERNAME,
+  DB_PASSWORD,
+  DB_HOST,
+  DB_PORT,
 } = process.env;
 
-// const dbName = process.env.DATABASE_NAME || "Bourbon";
-// const uName = process.env.USERNAME || "root";
-// const pw = process.env.PASSWORD || "";
-// const host = process.env.HOST || "localhost";
-
-const sequelize = new Sequelize(DATABASE_NAME, USERNAME, PASSWORD, {
-  HOST,
+const sequelize = new Sequelize(DB_NAME, DB_USERNAME, DB_PASSWORD, {
+  host: DB_HOST,
   dialect: 'mysql',
 });
 
