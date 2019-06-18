@@ -19,9 +19,9 @@ sequelize.authenticate()
   .then(() => console.log('Connected to the database'))
   .catch(err => console.log('Could not connect to the database', err));
 
-// sequelize.sync({
-//   force: false, // Drops info in database for testing
-// });
+sequelize.sync({
+  force: false, // Drops info in database for testing
+});
 
 const User = sequelize.define('user', { 
   name: Sequelize.STRING,
