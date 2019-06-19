@@ -36,6 +36,14 @@ const saveLocation = (location) => {
     })
 }
 
+const getLocID = (location) => {
+    return Location.findOne({
+        where: {
+            name: location
+        }
+    }).then(loc => loc.id)
+}
+
 const getRatings = (locationID) => {
     return Ratings.findAll({
         where: {
@@ -44,13 +52,14 @@ const getRatings = (locationID) => {
     })
 };
 
-const getLocID = (location) => {
-    return Location.findOne({
+const getRatingID = (rating) => {
+    return Ratings.findOne({
         where: {
-            name: location
+            
         }
-    }).then(loc => loc.id)
+    })
 }
+
 
 module.exports = {
     signUpUser,
