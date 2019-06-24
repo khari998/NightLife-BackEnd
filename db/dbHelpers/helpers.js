@@ -26,14 +26,17 @@ const signUpUser = (name, phone, email) => {
 };
 
 const saveLocation = (location) => {
-    return Location.findOrCreate({
-        where: {
-            name: location
-        },
-        defaults: {
-            name: location,
-        }
+    return Location.create({
+            name: location.name,
+            address: location.address,
+            type: location.type,
+            long: location.long,
+            lat: location.lat,
     })
+}
+
+const bulkLocations = (locations) => {
+    return Location.bulkCreate(locations);
 }
 
 const getLocID = (location) => {
@@ -66,5 +69,6 @@ module.exports = {
     saveLocation,
     getRatings,
     getLocID,
+    bulkLocations,
 }
 

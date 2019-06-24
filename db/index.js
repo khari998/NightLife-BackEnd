@@ -20,7 +20,7 @@ sequelize.authenticate()
   .catch(err => console.log('Could not connect to the database', err));
 
 sequelize.sync({
-  force: false, // Drops info in database for testing
+  force: true, // Drops info in database for testing
 });
 
 const User = sequelize.define('user', { 
@@ -32,7 +32,11 @@ const User = sequelize.define('user', {
 
 const Location = sequelize.define('location', {
   name: Sequelize.STRING,
+  type: Sequelize.STRING,
+  address: Sequelize.STRING,
   rating_avg: Sequelize.INTEGER,
+  lat: Sequelize.FLOAT,
+  long: Sequelize.FLOAT,
 })
 
 const Guardians = sequelize.define('guardians', {
