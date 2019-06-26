@@ -109,7 +109,6 @@ app.get('/comments', (req, res) => {
 
 /* * TWILIO CLIENT * */
 app.post('/sms', (req, res) => {
-  console.log(req);
   return client.messages.create({
     to: process.env.MY_PHONE_NUMBER,
     from: `+15046086414
@@ -117,7 +116,6 @@ app.post('/sms', (req, res) => {
     body: 'Don\'t Panic',
   })
     .then((message) => {
-      console.log(message.sid);
       res.status(200)
         .send({ message });
     });

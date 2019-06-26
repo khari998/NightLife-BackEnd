@@ -12,15 +12,15 @@ const {
 } = require('../index.js');
 
 const signUpUser = (name, phone, email) => User.findOrCreate({
-    where: {
-      email,
-    },
-    defaults: {
-      name,
-      phone,
-      email,
-    },
-  });
+  where: {
+    email,
+  },
+  defaults: {
+    name,
+    phone,
+    email,
+  },
+});
 
 const saveLocation = location => Location.create({
   name: location.name,
@@ -46,13 +46,7 @@ const getRatings = locationID => Ratings.findAll({
   },
 });
 
-const getRatingID = (rating) => {
-    return Ratings.findOne({
-        where: {
-
-        }
-    })
-}
+const getComments = () => Comment.findAll({});
 
 
 module.exports = {
@@ -61,4 +55,5 @@ module.exports = {
   getRatings,
   getLocID,
   bulkLocations,
+  getComments,
 };
