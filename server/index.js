@@ -16,6 +16,7 @@ const {
   getRatings,
   getLocID,
   bulkLocations,
+  getComments,
 } = require('../db/dbHelpers/helpers.js');
 
 const app = express();
@@ -71,18 +72,18 @@ app.put('/ratings', (req, res) => {
 app.get('/locations', (req, res) => {
   // query database and send back all locations
   db.Location.findAll({})
-    .then(data => {
+    .then((data) => {
       res.send(data);
-    })
-})
+    });
+});
 
 app.post('/locations', (req, res) => {
   // saveLocation(req.body)
   bulkLocations(req.body)
     .then(() => {
       res.status(200)
-        .send({name: 'test' });
-    })
+        .send({ name: 'test' });
+    });
   // .then(() => {
   //     console.log('bulk creation successful');
   //     return db.Location.findAll({})
@@ -90,14 +91,19 @@ app.post('/locations', (req, res) => {
   // .then(data => {
   //     res.send(data);
   // })
-})
+});
 
 
 // create entry for guardians
 
 // create entry for reviews
 
-
+app.get('/comments', (req, res) => {
+  getComments()
+    .then((data) => {
+      res.send(data);
+    });
+});
 
 
 app.listen(PORT, () => { console.log(`listening on port ${PORT}`); });

@@ -2,12 +2,12 @@
 
 
 const Sequelize = require('sequelize');
+
 const {  
   DB_NAME,
   DB_USERNAME,
   DB_PASSWORD,
   DB_HOST,
-  DB_PORT,
 } = process.env;
 
 const sequelize = new Sequelize(DB_NAME, DB_USERNAME, DB_PASSWORD, {
@@ -20,7 +20,7 @@ sequelize.authenticate()
   .catch(err => console.log('Could not connect to the database', err));
 
 sequelize.sync({
-  force: true, // Drops info in database for testing
+  force: false, // Drops info in database for testing
 });
 
 const User = sequelize.define('user', { 
@@ -37,13 +37,13 @@ const Location = sequelize.define('location', {
   rating_avg: Sequelize.INTEGER,
   lat: Sequelize.FLOAT,
   long: Sequelize.FLOAT,
-})
+});
 
 const Guardians = sequelize.define('guardians', {
   name: Sequelize.STRING,
   number: Sequelize.STRING,
   email: Sequelize.STRING,
-})
+});
 Guardians.belongsTo(User);
 
 
@@ -70,5 +70,5 @@ module.exports = {
   Guardians,
   Ratings,
   Users_Locations,
-  Comment
-}
+  Comment,
+};
