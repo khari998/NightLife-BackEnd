@@ -1,9 +1,11 @@
-// database index
-
 
 const Sequelize = require('sequelize');
 
+<<<<<<< HEAD
 const {  
+=======
+const {
+>>>>>>> a98ee051ceca5f837a941170942ee7e02595b16a
   DB_NAME,
   DB_USERNAME,
   DB_PASSWORD,
@@ -23,7 +25,7 @@ sequelize.sync({
   force: false, // Drops info in database for testing
 });
 
-const User = sequelize.define('user', { 
+const User = sequelize.define('user', {
   name: Sequelize.STRING,
   phone: Sequelize.STRING,
   profilePic: Sequelize.STRING,

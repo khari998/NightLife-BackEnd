@@ -11,8 +11,7 @@ const {
   Comment,
 } = require('../index.js');
 
-const signUpUser = (name, phone, email) => {
-  return User.findOrCreate({
+const signUpUser = (name, phone, email) => User.findOrCreate({
     where: {
       email,
     },
@@ -22,42 +21,38 @@ const signUpUser = (name, phone, email) => {
       email,
     },
   });
-};
 
-const saveLocation = (location) => {
-  return Location.create({
-    name: location.name,
-    address: location.address,
-    type: location.type,
-    long: location.long,
-    lat: location.lat,
-  });
-};
+const saveLocation = location => Location.create({
+  name: location.name,
+  address: location.address,
+  type: location.type,
+  long: location.long,
+  lat: location.lat,
+});
 
 const bulkLocations = (locations) => {
   return Location.bulkCreate(locations);
 };
 
-const getLocID = (location) => {
-  return Location.findOne({
-    where: {
-      name: location,
-    },
-  }).then(loc => loc.id)
-};
+const getLocID = location => Location.findOne({
+  where: {
+    name: location,
+  },
+}).then(loc => loc.id);
 
-const getRatings = (locationID) => {
-  return Ratings.findAll({
-    where: {
-      locationId: locationID,
-    },
-  });
-};
+const getRatings = locationID => Ratings.findAll({
+  where: {
+    locationId: locationID,
+  },
+});
 
-const getComments = () => {
-  return Comment.findAll({
-  });
-};
+const getRatingID = (rating) => {
+    return Ratings.findOne({
+        where: {
+
+        }
+    })
+}
 
 
 module.exports = {
@@ -66,5 +61,4 @@ module.exports = {
   getRatings,
   getLocID,
   bulkLocations,
-  getComments,
 };

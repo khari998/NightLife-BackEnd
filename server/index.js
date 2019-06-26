@@ -1,12 +1,22 @@
 require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
-const cors = require('cors')
+const cors = require('cors');
+
+const inspector = (req, res, next) => {
+  console.log('hit this line');
+  next();
+};
+
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const client = require('twilio')(accountSid, authToken);
 const db = require('../db/index.js');
+
 
 const corsOptions = {
   origin: 'ngrok-host-url',
-  optionsSuccessStatus: 200 
+  optionsSuccessStatus: 200,
 };
 
 
@@ -23,7 +33,7 @@ const app = express();
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(express.static(__dirname));
-
+app.use(inspector);
 
 const PORT = process.env.PORT || 8080;
 
@@ -37,7 +47,6 @@ app.post('/signup', (req, res) => {
     })
     .catch(e => console.log(e));
 });
-
 
 // create new entry for comments at a location
 
@@ -84,13 +93,6 @@ app.post('/locations', (req, res) => {
       res.status(200)
         .send({ name: 'test' });
     });
-  // .then(() => {
-  //     console.log('bulk creation successful');
-  //     return db.Location.findAll({})
-  // })
-  // .then(data => {
-  //     res.send(data);
-  // })
 });
 
 
@@ -105,6 +107,30 @@ app.get('/comments', (req, res) => {
     });
 });
 
+/* * TWILIO CLIENT * */
+app.post('/sms', (req, res) => {
+  console.log(req);
+  return client.messages.create({
+    to: process.env.MY_PHONE_NUMBER,
+    from: `+15046086414
+    `,
+    body: 'Don\'t Panic',
+  })
+    .then((message) => {
+      console.log(message.sid);
+      res.status(200)
+        .send({ message });
+    });
+});
+
+// client.messages.create({
+//   to: process.env.MY_PHONE_NUMBER,
+//   from: `+15046086414
+//   `,
+//   body: 'Don\'t Panic',
+// })
+//   .then((message) => {
+//     console.log(message.sid);
+//   });
 
 app.listen(PORT, () => { console.log(`listening on port ${PORT}`); });
-
