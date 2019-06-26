@@ -26,6 +26,7 @@ const {
   getRatings,
   getLocID,
   bulkLocations,
+  getComments,
 } = require('../db/dbHelpers/helpers.js');
 
 const app = express();
@@ -98,6 +99,13 @@ app.post('/locations', (req, res) => {
 // create entry for guardians
 
 // create entry for reviews
+
+app.get('/comments', (req, res) => {
+  getComments()
+    .then((data) => {
+      res.send(data);
+    });
+});
 
 /* * TWILIO CLIENT * */
 app.post('/sms', (req, res) => {

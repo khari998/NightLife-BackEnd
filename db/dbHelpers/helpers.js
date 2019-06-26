@@ -1,7 +1,6 @@
 // To be added
 
 // DB HELPERS
-const Sequelize = require('sequelize');
 
 const {
   User,
