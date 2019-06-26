@@ -40,14 +40,23 @@ const getLocID = location => Location.findOne({
   },
 }).then(loc => loc.id);
 
-const getRatings = locationID => Ratings.findAll({
+const getRatings = locationId => Ratings.findAll({
   where: {
-    locationId: locationID,
+    locationId,
   },
 });
 
 const getComments = () => Comment.findAll({});
 
+const postRating = locationId => Ratings.create({
+  rating: 1,
+  locationId,
+});
+
+const downRating = locationId => Ratings.create({
+  rating: -1,
+  locationId,
+});
 
 module.exports = {
   signUpUser,
@@ -56,4 +65,6 @@ module.exports = {
   getLocID,
   bulkLocations,
   getComments,
+  postRating,
+  downRating,
 };

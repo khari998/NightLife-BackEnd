@@ -27,6 +27,8 @@ const {
   getLocID,
   bulkLocations,
   getComments,
+  postRating,
+  downRating
 } = require('../db/dbHelpers/helpers.js');
 
 const app = express();
@@ -118,6 +120,29 @@ app.post('/sms', (req, res) => {
     .then((message) => {
       res.status(200)
         .send({ message });
+    });
+});
+
+// post rating
+app.post('/ratings', (req, res) => {
+  postRating(req.body.locationId)
+    .then(() => {
+      res.status(200).send({ post: 'ok' });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
+
+// reduce rating
+
+app.post('/ratingsDown', (req, res) => {
+  downRating(req.body.locationId)
+    .then(() => {
+      res.status(200).send({ post: 'ok' });
+    })
+    .catch((error) => {
+      console.log(error);
     });
 });
 
