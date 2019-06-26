@@ -1,8 +1,7 @@
-// database index
-
 
 const Sequelize = require('sequelize');
-const {  
+
+const {
   DB_NAME,
   DB_USERNAME,
   DB_PASSWORD,
@@ -20,10 +19,10 @@ sequelize.authenticate()
   .catch(err => console.log('Could not connect to the database', err));
 
 sequelize.sync({
-  force: true, // Drops info in database for testing
+  force: false, // Drops info in database for testing
 });
 
-const User = sequelize.define('user', { 
+const User = sequelize.define('user', {
   name: Sequelize.STRING,
   phone: Sequelize.STRING,
   profilePic: Sequelize.STRING,
@@ -37,13 +36,13 @@ const Location = sequelize.define('location', {
   rating_avg: Sequelize.INTEGER,
   lat: Sequelize.FLOAT,
   long: Sequelize.FLOAT,
-})
+});
 
 const Guardians = sequelize.define('guardians', {
   name: Sequelize.STRING,
   number: Sequelize.STRING,
   email: Sequelize.STRING,
-})
+});
 Guardians.belongsTo(User);
 
 
@@ -70,5 +69,5 @@ module.exports = {
   Guardians,
   Ratings,
   Users_Locations,
-  Comment
-}
+  Comment,
+};
