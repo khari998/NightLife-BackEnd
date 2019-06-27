@@ -28,7 +28,8 @@ const {
   bulkLocations,
   getComments,
   postRating,
-  downRating
+  downRating,
+  updateLocationRatingAvg,
 } = require('../db/dbHelpers/helpers.js');
 
 const app = express();
@@ -128,6 +129,7 @@ app.post('/ratings', (req, res) => {
   postRating(req.body.locationId)
     .then(() => {
       res.status(200).send({ post: 'ok' });
+      updateLocationRatingAvg(req.body.locationId);
     })
     .catch((error) => {
       console.log(error);
@@ -140,6 +142,7 @@ app.post('/ratingsDown', (req, res) => {
   downRating(req.body.locationId)
     .then(() => {
       res.status(200).send({ post: 'ok' });
+      updateLocationRatingAvg(req.body.locationId);
     })
     .catch((error) => {
       console.log(error);
@@ -155,5 +158,6 @@ app.post('/ratingsDown', (req, res) => {
 //   .then((message) => {
 //     console.log(message.sid);
 //   });
+
 
 app.listen(PORT, () => { console.log(`listening on port ${PORT}`); });

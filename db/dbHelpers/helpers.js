@@ -58,6 +58,30 @@ const downRating = locationId => Ratings.create({
   locationId,
 });
 
+const updateLocationRatingAvg = (locationId) => {
+  // first query ratings by location Id
+  // get sum of all
+  // 
+  let rating_avg = 0;
+  Ratings.findAll({
+    where: {
+      locationId,
+    },
+  })
+    .then((data) => {
+      data.forEach((rating) => {
+        rating_avg += rating.rating;
+      });
+      // now update location w/ new rating avg
+      Location.update({
+        rating_avg,
+      }, {
+        where: { id: locationId },
+      });
+    });
+
+};
+
 module.exports = {
   signUpUser,
   saveLocation,
@@ -67,4 +91,5 @@ module.exports = {
   getComments,
   postRating,
   downRating,
+  updateLocationRatingAvg
 };
