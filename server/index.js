@@ -26,6 +26,9 @@ const {
   getRatings,
   getLocID,
   bulkLocations,
+  getComments,
+  postRating,
+  downRating
 } = require('../db/dbHelpers/helpers.js');
 
 const app = express();
@@ -99,9 +102,15 @@ app.post('/locations', (req, res) => {
 
 // create entry for reviews
 
+app.get('/comments', (req, res) => {
+  getComments()
+    .then((data) => {
+      res.send(data);
+    });
+});
+
 /* * TWILIO CLIENT * */
 app.post('/sms', (req, res) => {
-  console.log(req);
   return client.messages.create({
     to: process.env.MY_PHONE_NUMBER,
     from: `+15046086414
@@ -109,9 +118,31 @@ app.post('/sms', (req, res) => {
     body: '*Current User* has indicated they are experiencing an emergency. Please contact them and / or the authorities',
   })
     .then((message) => {
-      console.log(message.sid);
       res.status(200)
         .send({ message });
+    });
+});
+
+// post rating
+app.post('/ratings', (req, res) => {
+  postRating(req.body.locationId)
+    .then(() => {
+      res.status(200).send({ post: 'ok' });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
+
+// reduce rating
+
+app.post('/ratingsDown', (req, res) => {
+  downRating(req.body.locationId)
+    .then(() => {
+      res.status(200).send({ post: 'ok' });
+    })
+    .catch((error) => {
+      console.log(error);
     });
 });
 

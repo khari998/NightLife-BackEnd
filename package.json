@@ -10,7 +10,8 @@
     "express": "^4.17.1",
     "mysql2": "^1.6.5",
     "node": "^12.4.0",
-    "sequelize": "^5.8.10"
+    "sequelize": "^5.8.10",
+    "twilio": "^3.32.0"
   },
   "devDependencies": {
     "eslint": "^5.16.0",
