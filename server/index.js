@@ -27,6 +27,8 @@ const {
   getLocID,
   bulkLocations,
   getComments,
+  postRating,
+  downRating
 } = require('../db/dbHelpers/helpers.js');
 
 const app = express();
@@ -109,7 +111,6 @@ app.get('/comments', (req, res) => {
 
 /* * TWILIO CLIENT * */
 app.post('/sms', (req, res) => {
-  console.log(req);
   return client.messages.create({
     to: process.env.MY_PHONE_NUMBER,
     from: `+15046086414
@@ -117,9 +118,31 @@ app.post('/sms', (req, res) => {
     body: 'Don\'t Panic',
   })
     .then((message) => {
-      console.log(message.sid);
       res.status(200)
         .send({ message });
+    });
+});
+
+// post rating
+app.post('/ratings', (req, res) => {
+  postRating(req.body.locationId)
+    .then(() => {
+      res.status(200).send({ post: 'ok' });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
+
+// reduce rating
+
+app.post('/ratingsDown', (req, res) => {
+  downRating(req.body.locationId)
+    .then(() => {
+      res.status(200).send({ post: 'ok' });
+    })
+    .catch((error) => {
+      console.log(error);
     });
 });
 
