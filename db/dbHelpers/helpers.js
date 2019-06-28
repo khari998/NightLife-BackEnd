@@ -58,6 +58,11 @@ const downRating = locationId => Ratings.create({
   locationId,
 });
 
+const addGuardian = guardian => Guardians.create({
+  name: guardian.name,
+  number: guardian.phone,
+});
+
 module.exports = {
   signUpUser,
   saveLocation,
@@ -67,4 +72,5 @@ module.exports = {
   getComments,
   postRating,
   downRating,
+  addGuardian,
 };
