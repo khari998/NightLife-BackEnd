@@ -44,10 +44,10 @@ const PORT = process.env.PORT || 8080;
 
 // create new entry in db for new user
 app.post('/signup', (req, res) => {
-  const { name, phone, email } = req.body;
-  signUpUser(name, phone, email)
+  const { name, email } = req.body;
+  signUpUser(name, email)
     .then(() => {
-      res.sendStatus(201);
+      res.status(200).send({ success: 'Okay' });
     })
     .catch(e => console.log(e));
 });
@@ -158,6 +158,5 @@ app.post('/addGuardian', (req, res) => {
     })
     .catch(e => console.log(e));
 });
-
 
 app.listen(PORT, () => { console.log(`listening on port ${PORT}`); });
