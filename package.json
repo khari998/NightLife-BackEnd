@@ -9,8 +9,10 @@
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
     "mysql2": "^1.6.5",
+    "nativescript-socketio": "^3.3.1",
     "node": "^12.4.0",
     "sequelize": "^5.8.10",
+    "socket.io": "^2.2.0",
     "twilio": "^3.32.0"
   },
   "devDependencies": {
