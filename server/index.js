@@ -30,6 +30,7 @@ const {
   postRating,
   downRating,
   updateLocationRatingAvg,
+  addGuardian,
 } = require('../db/dbHelpers/helpers.js');
 
 const app = express();
@@ -116,7 +117,7 @@ app.post('/sms', (req, res) => {
     to: process.env.MY_PHONE_NUMBER,
     from: `+15046086414
     `,
-    body: 'Don\'t Panic',
+    body: '*Current User* has indicated they are experiencing an emergency. Please contact them and / or the authorities',
   })
     .then((message) => {
       res.status(200)
@@ -149,15 +150,14 @@ app.post('/ratingsDown', (req, res) => {
     });
 });
 
-// client.messages.create({
-//   to: process.env.MY_PHONE_NUMBER,
-//   from: `+15046086414
-//   `,
-//   body: 'Don\'t Panic',
-// })
-//   .then((message) => {
-//     console.log(message.sid);
-//   });
+app.post('/addGuardian', (req, res) => {
+  console.log(req, res);
+  addGuardian(req.body)
+    .then(() => {
+      res.status(200).send({ post: 'ok' });
+    })
+    .catch(e => console.log(e));
+});
 
 
 app.listen(PORT, () => { console.log(`listening on port ${PORT}`); });
