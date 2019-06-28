@@ -28,7 +28,7 @@ const {
   bulkLocations,
   getComments,
   postRating,
-  downRating
+  downRating,
 } = require('../db/dbHelpers/helpers.js');
 
 const app = express();
@@ -42,10 +42,10 @@ const PORT = process.env.PORT || 8080;
 
 // create new entry in db for new user
 app.post('/signup', (req, res) => {
-  const { name, phone, email } = req.body;
-  signUpUser(name, phone, email)
+  const { name, email } = req.body;
+  signUpUser(name, email)
     .then(() => {
-      res.sendStatus(201);
+      res.status(200).send({ success: 'Okay' });
     })
     .catch(e => console.log(e));
 });

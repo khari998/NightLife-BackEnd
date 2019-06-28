@@ -11,13 +11,12 @@ const {
   Comment,
 } = require('../index.js');
 
-const signUpUser = (name, phone, email) => User.findOrCreate({
+const signUpUser = (name, email) => User.findOrCreate({
   where: {
     email,
   },
   defaults: {
     name,
-    phone,
     email,
   },
 });
