@@ -29,11 +29,8 @@ const {
   getComments,
   postRating,
   downRating,
-<<<<<<< HEAD
-=======
   updateLocationRatingAvg,
   addGuardian,
->>>>>>> 4e79d952375d63a10ec4c40937f0c9b07f802d91
 } = require('../db/dbHelpers/helpers.js');
 
 const app = express();
@@ -161,6 +158,5 @@ app.post('/addGuardian', (req, res) => {
     })
     .catch(e => console.log(e));
 });
-
 
 app.listen(PORT, () => { console.log(`listening on port ${PORT}`); });
