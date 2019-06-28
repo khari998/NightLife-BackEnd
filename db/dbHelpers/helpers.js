@@ -11,13 +11,12 @@ const {
   Comment,
 } = require('../index.js');
 
-const signUpUser = (name, phone, email) => User.findOrCreate({
+const signUpUser = (name, email) => User.findOrCreate({
   where: {
     email,
   },
   defaults: {
     name,
-    phone,
     email,
   },
 });
@@ -66,6 +65,45 @@ const downRating = locationId => Ratings.create({
   locationId,
 });
 
+const addGuardian = guardian => Guardians.create({
+  name: guardian.name,
+  number: guardian.phone,
+});
+
+const diffHours = (t2, t1) => {
+  let diff = (t2.getTime() - t1.getTime()) / 1000;
+  diff /= (60 * 60);
+  return Math.abs(Math.round(diff));
+};
+
+const updateLocationRatingAvg = (locationId) => {
+  // first query ratings by location Id
+  // get sum of all
+  // 
+  let rating_avg = 0;
+  let newTime = new Date();
+  Ratings.findAll({
+    where: {
+      locationId,
+    },
+  })
+    .then((data) => {
+      data.forEach((rating) => {
+        let postTime = rating.createdAt;
+        if (diffHours(newTime, postTime) <= 2) {
+          rating_avg += rating.rating;
+        }
+      });
+      // now update location w/ new rating avg
+      Location.update({
+        rating_avg,
+      }, {
+        where: { id: locationId },
+      });
+    });
+
+};
+
 module.exports = {
   signUpUser,
   saveLocation,
@@ -75,5 +113,10 @@ module.exports = {
   getComments,
   postRating,
   downRating,
+<<<<<<< HEAD
   postComment,
+=======
+  addGuardian,
+  updateLocationRatingAvg,
+>>>>>>> 314e5b1c0eacdc19fdb4cfe590d9d9ca2e5f3119
 };

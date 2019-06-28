@@ -36,7 +36,12 @@ const {
   getComments,
   postRating,
   downRating,
+<<<<<<< HEAD
   postComment,
+=======
+  updateLocationRatingAvg,
+  addGuardian,
+>>>>>>> 314e5b1c0eacdc19fdb4cfe590d9d9ca2e5f3119
 } = require('../db/dbHelpers/helpers.js');
 
 app.use(cors(corsOptions));
@@ -49,10 +54,10 @@ const PORT = process.env.PORT || 8080;
 
 // create new entry in db for new user
 app.post('/signup', (req, res) => {
-  const { name, phone, email } = req.body;
-  signUpUser(name, phone, email)
+  const { name, email } = req.body;
+  signUpUser(name, email)
     .then(() => {
-      res.sendStatus(201);
+      res.status(200).send({ success: 'Okay' });
     })
     .catch(e => console.log(e));
 });
@@ -132,7 +137,7 @@ app.post('/sms', (req, res) => {
     to: process.env.MY_PHONE_NUMBER,
     from: `+15046086414
     `,
-    body: 'Don\'t Panic',
+    body: '*Current User* has indicated they are experiencing an emergency. Please contact them and / or the authorities',
   })
     .then((message) => {
       res.status(200)
@@ -145,6 +150,7 @@ app.post('/ratings', (req, res) => {
   postRating(req.body.locationId)
     .then(() => {
       res.status(200).send({ post: 'ok' });
+      updateLocationRatingAvg(req.body.locationId);
     })
     .catch((error) => {
       console.log(error);
@@ -157,21 +163,21 @@ app.post('/ratingsDown', (req, res) => {
   downRating(req.body.locationId)
     .then(() => {
       res.status(200).send({ post: 'ok' });
+      updateLocationRatingAvg(req.body.locationId);
     })
     .catch((error) => {
       console.log(error);
     });
 });
 
-// client.messages.create({
-//   to: process.env.MY_PHONE_NUMBER,
-//   from: `+15046086414
-//   `,
-//   body: 'Don\'t Panic',
-// })
-//   .then((message) => {
-//     console.log(message.sid);
-//   });
+app.post('/addGuardian', (req, res) => {
+  console.log(req, res);
+  addGuardian(req.body)
+    .then(() => {
+      res.status(200).send({ post: 'ok' });
+    })
+    .catch(e => console.log(e));
+});
 
 // io.on('connection', (socket) => {
 //   console.log('user connected');
