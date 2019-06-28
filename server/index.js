@@ -29,6 +29,7 @@ const {
   getComments,
   postRating,
   downRating,
+  updateLocationRatingAvg,
   addGuardian,
 } = require('../db/dbHelpers/helpers.js');
 
@@ -129,6 +130,7 @@ app.post('/ratings', (req, res) => {
   postRating(req.body.locationId)
     .then(() => {
       res.status(200).send({ post: 'ok' });
+      updateLocationRatingAvg(req.body.locationId);
     })
     .catch((error) => {
       console.log(error);
@@ -141,6 +143,7 @@ app.post('/ratingsDown', (req, res) => {
   downRating(req.body.locationId)
     .then(() => {
       res.status(200).send({ post: 'ok' });
+      updateLocationRatingAvg(req.body.locationId);
     })
     .catch((error) => {
       console.log(error);
@@ -155,5 +158,6 @@ app.post('/addGuardian', (req, res) => {
     })
     .catch(e => console.log(e));
 });
+
 
 app.listen(PORT, () => { console.log(`listening on port ${PORT}`); });
