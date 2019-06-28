@@ -29,6 +29,11 @@ const {
   getComments,
   postRating,
   downRating,
+<<<<<<< HEAD
+=======
+  updateLocationRatingAvg,
+  addGuardian,
+>>>>>>> 4e79d952375d63a10ec4c40937f0c9b07f802d91
 } = require('../db/dbHelpers/helpers.js');
 
 const app = express();
@@ -115,7 +120,7 @@ app.post('/sms', (req, res) => {
     to: process.env.MY_PHONE_NUMBER,
     from: `+15046086414
     `,
-    body: 'Don\'t Panic',
+    body: '*Current User* has indicated they are experiencing an emergency. Please contact them and / or the authorities',
   })
     .then((message) => {
       res.status(200)
@@ -128,6 +133,7 @@ app.post('/ratings', (req, res) => {
   postRating(req.body.locationId)
     .then(() => {
       res.status(200).send({ post: 'ok' });
+      updateLocationRatingAvg(req.body.locationId);
     })
     .catch((error) => {
       console.log(error);
@@ -140,20 +146,21 @@ app.post('/ratingsDown', (req, res) => {
   downRating(req.body.locationId)
     .then(() => {
       res.status(200).send({ post: 'ok' });
+      updateLocationRatingAvg(req.body.locationId);
     })
     .catch((error) => {
       console.log(error);
     });
 });
 
-// client.messages.create({
-//   to: process.env.MY_PHONE_NUMBER,
-//   from: `+15046086414
-//   `,
-//   body: 'Don\'t Panic',
-// })
-//   .then((message) => {
-//     console.log(message.sid);
-//   });
+app.post('/addGuardian', (req, res) => {
+  console.log(req, res);
+  addGuardian(req.body)
+    .then(() => {
+      res.status(200).send({ post: 'ok' });
+    })
+    .catch(e => console.log(e));
+});
+
 
 app.listen(PORT, () => { console.log(`listening on port ${PORT}`); });
