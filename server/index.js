@@ -129,8 +129,8 @@ app.get('/comments', (req, res) => {
 });
 
 app.post('/comments', (req, res) => {
-  const { locationId, text } = req.body;
-  postComment(locationId, text)
+  const { locationId, text, userId } = req.body;
+  postComment(locationId, text, userId)
     .then(() => {
       res.status(200).send({
         success: 'OK',
@@ -170,7 +170,7 @@ app.post('/sms', (req, res) => {
 
 // post rating
 app.post('/ratings', (req, res) => {
-  postRating(req.body.locationId)
+  postRating(req.body.locationId, req.body.userId)
     .then(() => {
       res.status(200).send({ post: 'ok' });
       updateLocationRatingAvg(req.body.locationId);
@@ -183,7 +183,7 @@ app.post('/ratings', (req, res) => {
 // reduce rating
 
 app.post('/ratingsDown', (req, res) => {
-  downRating(req.body.locationId)
+  downRating(req.body.locationId, req.body.userId)
     .then(() => {
       res.status(200).send({ post: 'ok' });
       updateLocationRatingAvg(req.body.locationId);
