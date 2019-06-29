@@ -9,6 +9,7 @@ const {
   Ratings,
   Users_Locations,
   Comment,
+  Users_Guradians,
 } = require('../index.js');
 
 const diffHours = (t2, t1) => {
@@ -48,6 +49,12 @@ const getRatings = locationId => Ratings.findAll({
     locationId,
   },
 });
+
+// const userLocCreateOrUpdate = () => {
+//   Users_Locations.findOne({
+
+//   })
+// }
 
 const getComments = () => Comment.findAll({});
 
