@@ -70,11 +70,15 @@ const addGuardian = guardian => Guardians.create({
   name: guardian.name,
   number: guardian.phone,
 });
-const diffHours = (t2, t1) => {
-  let diff = (t2.getTime() - t1.getTime()) / 1000;
-  diff /= (60 * 60);
-  return Math.abs(Math.round(diff));
+
+const getCurrentUser = (email) => {
+  return User.findAll({
+    where: {
+      email,
+    },
+  });
 };
+
 
 const updateLocationRatingAvg = (locationId) => {
   // first query ratings by location Id
@@ -116,4 +120,5 @@ module.exports = {
   postComment,
   addGuardian,
   updateLocationRatingAvg,
+  getCurrentUser,
 };

@@ -39,6 +39,7 @@ const {
   postComment,
   updateLocationRatingAvg,
   addGuardian,
+  getCurrentUser,
 } = require('../db/dbHelpers/helpers.js');
 
 app.use(cors(corsOptions));
@@ -59,6 +60,15 @@ app.post('/signup', (req, res) => {
     .catch(e => console.log(e));
 });
 
+app.get('/users', (req, res) => {
+  getCurrentUser(req.query.email)
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
 // create new entry for comments at a location
 
 // save location
@@ -205,55 +215,55 @@ const userList = [];
 io.on('connection', function (socket) {
   console.log('User Connected');
   socket.emit('connected', 'Welcome');
-	let addedUser = false;
+  let addedUser = false;
 
-	// console.log('connection query params', socket.handshake.query);
-	// console.log('connection headers', socket.request.headers);
-	// console.log('connection cookies', socket.request.headers.cookie);
-	socket.on('add user', function (data, cb) {
-		if (addedUser) return;
-		addedUser = true;
-		socket.username = data.username;
-		console.log('Username: ', data.username);
-		userList.push({ username: data.username });
-		socket.emit('login', { userList: userList });
-		socket.broadcast.emit('user joined', {
-			username: data.username
-		});
-		cb(true);
-		console.log('add user ack');
-	})
+  // console.log('connection query params', socket.handshake.query);
+  // console.log('connection headers', socket.request.headers);
+  // console.log('connection cookies', socket.request.headers.cookie);
+  socket.on('add user', function (data, cb) {
+    if (addedUser) return;
+    addedUser = true;
+    socket.username = data.username;
+    console.log('Username: ', data.username);
+    userList.push({ username: data.username });
+    socket.emit('login', { userList: userList });
+    socket.broadcast.emit('user joined', {
+      username: data.username
+    });
+    cb(true);
+    console.log('add user ack');
+  })
 
-	socket.on('new message', function (data, cb) {
-		cb(true)
-		console.log(data)
-		messageList.push(data)
-		socket.broadcast.emit('new message', data)
-	})
+  socket.on('new message', function (data, cb) {
+    cb(true)
+    console.log(data)
+    messageList.push(data)
+    socket.broadcast.emit('new message', data)
+  })
 
-	socket.on('getUsers', function () {
-		socket.emit('getUsers', userList)
-	})
-	socket.on('user count', function () {
-		socket.emit('user count', userList.length)
-	})
-	socket.on('getMessages', function () {
-		socket.emit('getMessages', messageList)
-	})
+  socket.on('getUsers', function () {
+    socket.emit('getUsers', userList)
+  })
+  socket.on('user count', function () {
+    socket.emit('user count', userList.length)
+  })
+  socket.on('getMessages', function () {
+    socket.emit('getMessages', messageList)
+  })
 
-	socket.on('disconnect', function () {
-		console.log('User Disconnected')
-		if (addedUser) {
-			for (let i = 0; i < userList.length; i++) {
-				if (socket.username === userList[ i ].username) {
-					userList.splice(i, 1)
-				}
-			}
-			socket.broadcast.emit('user left', {
-				username: socket.username
-			})
-		}
-	})
+  socket.on('disconnect', function () {
+    console.log('User Disconnected')
+    if (addedUser) {
+      for (let i = 0; i < userList.length; i++) {
+        if (socket.username === userList[ i ].username) {
+          userList.splice(i, 1)
+        }
+      }
+      socket.broadcast.emit('user left', {
+        username: socket.username
+      })
+    }
+  })
 })
 
 nspDefault.on('connect', (socket) => {
