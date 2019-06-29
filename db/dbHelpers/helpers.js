@@ -11,13 +11,12 @@ const {
   Comment,
 } = require('../index.js');
 
-const signUpUser = (name, phone, email) => User.findOrCreate({
+const signUpUser = (name, email) => User.findOrCreate({
   where: {
     email,
   },
   defaults: {
     name,
-    phone,
     email,
   },
 });
@@ -45,6 +44,14 @@ const getRatings = locationId => Ratings.findAll({
 });
 
 const getComments = () => Comment.findAll({});
+
+const postComment = (locationId, text, userId) => {
+  return Comment.create({
+    locationId,
+    text,
+    userId,
+  });
+};
 
 const postRating = locationId => Ratings.create({
   rating: 1,
@@ -104,4 +111,5 @@ module.exports = {
   downRating,
   addGuardian,
   updateLocationRatingAvg,
+  postComment,
 };
