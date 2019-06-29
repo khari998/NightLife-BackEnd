@@ -47,11 +47,10 @@ const getRatings = locationId => Ratings.findAll({
 
 const getComments = () => Comment.findAll({});
 
-const postComment = (locationId, text, userId) => {
+const postComment = (locationId, text) => {
   return Comment.create({
     locationId,
     text,
-    userId,
   });
 };
 
@@ -113,10 +112,7 @@ module.exports = {
   getComments,
   postRating,
   downRating,
-<<<<<<< HEAD
   postComment,
-=======
   addGuardian,
   updateLocationRatingAvg,
->>>>>>> 314e5b1c0eacdc19fdb4cfe590d9d9ca2e5f3119
 };
