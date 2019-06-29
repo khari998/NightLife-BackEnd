@@ -11,6 +11,12 @@ const {
   Comment,
 } = require('../index.js');
 
+const diffHours = (t2, t1) => {
+  let diff = (t2.getTime() - t1.getTime()) / 1000;
+  diff /= (60 * 60);
+  return Math.abs(Math.round(diff));
+};
+
 const signUpUser = (name, email) => User.findOrCreate({
   where: {
     email,
