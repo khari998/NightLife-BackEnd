@@ -47,12 +47,10 @@ const getRatings = locationId => Ratings.findAll({
 
 const getComments = () => Comment.findAll({});
 
-const postComment = (locationId, text) => {
-  return Comment.create({
-    locationId,
-    text,
-  });
-};
+const postComment = (locationId, text) => Comment.create({
+  locationId,
+  text,
+});
 
 const postRating = locationId => Ratings.create({
   rating: 1,
@@ -100,8 +98,8 @@ const updateLocationRatingAvg = (locationId) => {
         where: { id: locationId },
       });
     });
-
 };
+
 
 module.exports = {
   signUpUser,
