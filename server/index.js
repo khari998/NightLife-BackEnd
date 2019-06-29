@@ -36,6 +36,7 @@ const {
   getComments,
   postRating,
   downRating,
+  postComment,
   updateLocationRatingAvg,
   addGuardian,
 } = require('../db/dbHelpers/helpers.js');
@@ -118,9 +119,9 @@ app.get('/comments', (req, res) => {
 });
 
 app.post('/comments', (req, res) => {
-  const { locationId, text, userId } = req.body;
-  postComment(locationId, text, userId)
-    .then((data) => {
+  const { locationId, text } = req.body;
+  postComment(locationId, text)
+    .then(() => {
       res.status(200).send({
         success: 'OK',
       });
@@ -202,8 +203,8 @@ const messageList = [];
 const userList = [];
 
 io.on('connection', function (socket) {
-	console.log('User Connected');
-	socket.emit('connected', 'Welcome');
+  console.log('User Connected');
+  socket.emit('connected', 'Welcome');
 	let addedUser = false;
 
 	// console.log('connection query params', socket.handshake.query);
@@ -256,20 +257,20 @@ io.on('connection', function (socket) {
 })
 
 nspDefault.on('connect', (socket) => {
-	console.log('Joined Namespace: /')
+  console.log('Joined Namespace: /');
 
-	socket.on('disconnect', () => {
-		console.log('Left Namespace: /')
-	})
-})
+  socket.on('disconnect', () => {
+    console.log('Left Namespace: /');
+  });
+});
 
 nspChat.on('connect', (socket) => {
-	console.log('Joined Namespace: /chat')
+  console.log('Joined Namespace: /chat');
 
-	socket.on('disconnect', () => {
-		console.log('Left Namespace: /chat')
-	})
-})
+  socket.on('disconnect', () => {
+    console.log('Left Namespace: /chat');
+  });
+});
 
 
 server.listen(PORT, () => { console.log(`listening on port ${PORT}`); });
