@@ -36,12 +36,9 @@ const {
   getComments,
   postRating,
   downRating,
-<<<<<<< HEAD
   postComment,
-=======
   updateLocationRatingAvg,
   addGuardian,
->>>>>>> 314e5b1c0eacdc19fdb4cfe590d9d9ca2e5f3119
 } = require('../db/dbHelpers/helpers.js');
 
 app.use(cors(corsOptions));
@@ -190,8 +187,8 @@ const messageList = [];
 const userList = [];
 
 io.on('connection', function (socket) {
-	console.log('User Connected');
-	socket.emit('connected', 'Welcome');
+  console.log('User Connected');
+  socket.emit('connected', 'Welcome');
 	let addedUser = false;
 
 	// console.log('connection query params', socket.handshake.query);
