@@ -111,5 +111,4 @@ module.exports = {
   downRating,
   addGuardian,
   updateLocationRatingAvg,
-  postComment,
 };
