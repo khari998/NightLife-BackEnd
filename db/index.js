@@ -23,8 +23,6 @@ sequelize.sync({
 
 const User = sequelize.define('user', {
   name: Sequelize.STRING,
-  phone: Sequelize.STRING,
-  profilePic: Sequelize.STRING,
   email: Sequelize.STRING,
 });
 
@@ -40,9 +38,15 @@ const Location = sequelize.define('location', {
 const Guardians = sequelize.define('guardians', {
   name: Sequelize.STRING,
   number: Sequelize.STRING,
-  email: Sequelize.STRING,
 });
 Guardians.belongsTo(User);
+
+
+const Users_Guradians = sequelize.define('users_guardians', {
+
+});
+Users_Guradians.belongsTo(User);
+Users_Guradians.belongsTo(Guardians);
 
 
 const Ratings = sequelize.define('ratings', {
@@ -51,7 +55,9 @@ const Ratings = sequelize.define('ratings', {
 Ratings.belongsTo(User); // define join table relationship to User
 Ratings.belongsTo(Location);
 
-const Users_Locations = sequelize.define('users_locations', {}); // create join table as new table so it can be referenced as variable
+const Users_Locations = sequelize.define('users_locations', {
+  rating_avg: Sequelize.INTEGER,
+}); // create join table as new table so it can be referenced as variable
 Users_Locations.belongsTo(User); // define join table relationship to User
 Users_Locations.belongsTo(Location);
 
@@ -69,4 +75,5 @@ module.exports = {
   Ratings,
   Users_Locations,
   Comment,
+  Users_Guradians,
 };

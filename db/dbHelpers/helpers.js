@@ -9,6 +9,7 @@ const {
   Ratings,
   Users_Locations,
   Comment,
+  Users_Guradians,
 } = require('../index.js');
 
 const signUpUser = (name, email) => User.findOrCreate({
@@ -44,6 +45,12 @@ const getRatings = locationId => Ratings.findAll({
     locationId,
   },
 });
+
+// const userLocCreateOrUpdate = () => {
+//   Users_Locations.findOne({
+
+//   })
+// }
 
 const getComments = () => Comment.findAll({});
 
