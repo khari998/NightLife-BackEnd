@@ -79,6 +79,7 @@ const downRating = (locationId, userId) => Ratings.create({
 const addGuardian = guardian => Guardians.create({
   name: guardian.name,
   number: guardian.phone,
+  userId: guardian.userId,
 });
 
 const getCurrentUser = (email) => {
