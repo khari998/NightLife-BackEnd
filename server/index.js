@@ -140,16 +140,32 @@ app.post('/comments', (req, res) => {
 
 /* * TWILIO CLIENT * */
 app.post('/sms', (req, res) => {
-  return client.messages.create({
-    to: process.env.MY_PHONE_NUMBER,
-    from: `+15046086414
-    `,
-    body: '*Current User* has indicated they are experiencing an emergency. Please contact them and / or the authorities',
-  })
-    .then((message) => {
-      res.status(200)
-        .send({ message });
-    });
+  const numberArray = [
+    process.env.OMAR_PHONE,
+    process.env.MY_PHONE_NUMBER,
+  ];
+  return numberArray.map((person) => {
+    return client.messages.create({
+      to: [person],
+      from: `+15046086414
+      `,
+      body: 'Omar, tell me if this comes through',
+    })
+      .then((message) => {
+        res.status(200)
+          .send({ message });
+      });
+  });
+  // return client.messages.create({
+  //   to: [process.env.OMAR_PHONE],
+  //   from: `+15046086414
+  //   `,
+  //   body: 'Omar, tell me if this comes through',
+  // })
+  //   .then((message) => {
+  //     res.status(200)
+  //       .send({ message });
+  //   });
 });
 
 // post rating
